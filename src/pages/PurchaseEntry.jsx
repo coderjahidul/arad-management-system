@@ -34,11 +34,15 @@ const PurchaseEntry = () => {
 
                         <div className="mb-4">
                             <label className="block mb-2 font-medium">প্রতি বস্তার ওজন (কেজি)</label>
-                            <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="50" />
+                            <select className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                                <option>নির্বাচন করুন</option>
+                                <option>25 কেজি</option>
+                                <option>50 কেজি</option>
+                            </select>
                         </div>
 
                         <div className="mb-4">
-                            <label className="block mb-2 font-medium">প্রতি কেজি দর (টাকা)</label>
+                            <label className="block mb-2 font-medium">প্রতি বস্তার দর (টাকা)</label>
                             <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="0.00" />
                         </div>
 
