@@ -36,32 +36,16 @@ const SalesEntry = () => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div className="mb-4">
                                 <label className="block mb-2 font-medium">বস্তা সংখ্যা</label>
                                 <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="0" />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block mb-2 font-medium">কেজি / বস্তা</label>
-                                <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="50" />
-                            </div>
-                            <div className="mb-4">
-                                <label className="block mb-2 font-medium">মোট কেজি</label>
-                                <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-bg" placeholder="0" readOnly />
-                            </div>
-                        </div>
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="mb-4">
-                                <label className="block mb-2 font-medium">বিক্রয় দর (প্রতি কেজি)</label>
-                                <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="0.00" />
                             </div>
                             <div className="mb-4">
                                 <label className="block mb-2 font-medium">মোট বিল</label>
                                 <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent font-bold text-primary" placeholder="0.00" readOnly />
                             </div>
                         </div>
-
                         <div className="mt-8 flex gap-4">
                             <button type="button" className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white py-3 rounded-md font-medium transition-colors">
                                 <Save size={18} /> বিক্রয় সংরক্ষণ করুন

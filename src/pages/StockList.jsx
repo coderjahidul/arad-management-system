@@ -5,10 +5,10 @@ import Modal from '../components/Modal';
 const StockList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const stockItems = [
-        { id: 1, name: 'মিনিকেট', type: 'সরু', bags: 50, weight: 50, total: 2500 },
-        { id: 2, name: 'নাজিরশাইল', type: 'সরু', bags: 20, weight: 50, total: 1000 },
-        { id: 3, name: 'কাটারি ভোগ', type: 'সুগন্ধি', bags: 10, weight: 25, total: 250 },
-        { id: 4, name: 'BR28', type: 'মাঝারি', bags: 100, weight: 50, total: 5000 },
+        { id: 1, name: 'মিনিকেট', type: 'সরু', bags: 50, weight: 50 },
+        { id: 2, name: 'নাজিরশাইল', type: 'সরু', bags: 20, weight: 50 },
+        { id: 3, name: 'কাটারি ভোগ', type: 'সুগন্ধি', bags: 10, weight: 25 },
+        { id: 4, name: 'BR28', type: 'মাঝারি', bags: 100, weight: 50 },
     ];
 
     return (
@@ -50,7 +50,6 @@ const StockList = () => {
                                 <th className="p-3 border-b border-border font-semibold">ধরন</th>
                                 <th className="p-3 border-b border-border font-semibold">বস্তা সংখ্যা</th>
                                 <th className="p-3 border-b border-border font-semibold">প্রতি বস্তা (কেজি)</th>
-                                <th className="p-3 border-b border-border font-semibold">মোট কেজি</th>
                                 <th className="p-3 border-b border-border font-semibold">অ্যাকশন</th>
                             </tr>
                         </thead>
@@ -61,7 +60,6 @@ const StockList = () => {
                                     <td className="p-3 border-b border-border">{item.type}</td>
                                     <td className="p-3 border-b border-border">{item.bags}</td>
                                     <td className="p-3 border-b border-border">{item.weight} কেজি</td>
-                                    <td className="p-3 border-b border-border">{item.total} কেজি</td>
                                     <td className="p-3 border-b border-border">
                                         <button className="px-3 py-1 border border-border rounded hover:bg-bg transition-colors text-sm">আপডেট</button>
                                     </td>
@@ -94,6 +92,22 @@ const StockList = () => {
                             <option value="majhari">মাঝারি</option>
                             <option value="mota">মোটা</option>
                             <option value="sugondhi">সুগন্ধি</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block mb-2 font-medium text-gray-700">বস্তা সংখ্যা</label>
+                        <input
+                            type="text"
+                            className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                            placeholder="উদাহরণ: 10"
+                        />
+                    </div>
+                    <div>
+                        <label className="block mb-2 font-medium text-gray-700">প্রতি বস্তা (কেজি)</label>
+                        <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="">নির্বাচন করুন</option>
+                            <option value="25">25 কেজি</option>
+                            <option value="50">50 কেজি</option>
                         </select>
                     </div>
                     <div className="pt-4 flex justify-end gap-3">

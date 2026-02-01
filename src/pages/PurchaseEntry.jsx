@@ -56,13 +56,18 @@ const PurchaseEntry = () => {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="mb-4">
-                            <label className="block mb-2 font-medium">নগদ পরিশোধ</label>
+                            <label className="block mb-2 font-medium">পরিবহন ভাড়া</label>
                             <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="0.00" />
                         </div>
 
                         <div className="mb-4">
-                            <label className="block mb-2 font-medium">বাকি (বকেয়া)</label>
-                            <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-amber-50 text-amber-600" placeholder="0.00" readOnly />
+                            <label className="block mb-2 font-medium">অন্যান্য খরচ</label>
+                            <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="0.00" />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="block mb-2 font-medium">সর্বমোট টাকা</label>
+                            <input type="number" className="w-full p-3 border border-border rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent bg-bg" placeholder="0.00" readOnly />
                         </div>
                     </div>
 
