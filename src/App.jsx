@@ -4,11 +4,11 @@ import Dashboard from './pages/Dashboard';
 import StockList from './pages/StockList';
 import PurchaseEntry from './pages/PurchaseEntry';
 import SalesEntry from './pages/SalesEntry';
-import PartyList from './pages/PartyList';
+import SupplierList from './pages/SupplierList';
+import CustomerList from './pages/CustomerList';
 import Ledger from './pages/Ledger';
 import PaymentEntry from './pages/PaymentEntry';
 import Invoice from './pages/Invoice';
-import MarketRates from './pages/MarketRates';
 import Settings from './pages/Settings';
 import Login from './pages/Login';
 import DailyExpense from './pages/DailyExpense';
@@ -25,11 +25,11 @@ function App() {
           <Route path="stock" element={<StockList />} />
           <Route path="purchase" element={<PurchaseEntry />} />
           <Route path="sales" element={<SalesEntry />} />
-          <Route path="parties" element={<PartyList />} />
+          <Route path="parties/suppliers" element={<SupplierList />} />
+          <Route path="parties/customers" element={<CustomerList />} />
           <Route path="ledger" element={<Ledger />} />
           <Route path="payments" element={<PaymentEntry />} />
           <Route path="invoice" element={<Invoice />} />
-          <Route path="market-rates" element={<MarketRates />} />
           <Route path="expenses/daily" element={<DailyExpense />} />
           <Route path="expenses/monthly" element={<MonthlyExpense />} />
           <Route path="expenses/report" element={<ExpenseReport />} />

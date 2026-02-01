@@ -2,23 +2,21 @@ import { useState } from 'react';
 import { Phone, MapPin, Edit, Trash2, Plus, Save } from 'lucide-react';
 import Modal from '../components/Modal';
 
-const PartyList = () => {
+const SupplierList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const parties = [
+    const suppliers = [
         { id: 1, name: 'সাথী অটো রাইস মিল', type: 'মিলার', phone: '01712345678', address: 'দিনাজপুর', due: 0, receivable: 0 },
-        { id: 2, name: 'ভাই ভাই স্টোর', type: 'খুচরা', phone: '01812345678', address: 'যাত্রাবাড়ী', due: 5000, receivable: 0 },
-        { id: 3, name: 'মেসার্স লিটন এন্টারপ্রাইজ', type: 'পাইকার', phone: '01912345678', address: 'বাবুবাজার', due: 12000, receivable: 0 },
     ];
 
     return (
         <div>
             <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-                <h1 className="text-primary text-2xl font-bold">পার্টি তালিকা (Supplier/Customer)</h1>
+                <h1 className="text-primary text-2xl font-bold">সাপ্লায়ার তালিকা (Supplier List)</h1>
                 <button
                     onClick={() => setIsModalOpen(true)}
                     className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors w-full sm:w-auto"
                 >
-                    <Plus size={18} /> নতুন পার্টি যোগ করুন
+                    <Plus size={18} /> নতুন সাপ্লায়ার যোগ করুন
                 </button>
             </div>
 
@@ -36,12 +34,13 @@ const PartyList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {parties.map((p) => (
+                            {suppliers.map((p) => (
                                 <tr key={p.id} className="hover:bg-gray-50 transition-colors">
                                     <td className="p-3 border-b border-border font-semibold">{p.name}</td>
                                     <td className="p-3 border-b border-border">
-                                        <span className={`px-2 py-1 rounded text-xs ${p.type === 'মিলার' ? 'bg-indigo-100 text-indigo-800' : 'bg-amber-100 text-amber-800'
-                                            }`}>{p.type}</span>
+                                        <span className="px-2 py-1 rounded text-xs bg-indigo-100 text-indigo-800">
+                                            {p.type}
+                                        </span>
                                     </td>
                                     <td className="p-3 border-b border-border">
                                         <div className="flex items-center gap-1 text-sm">
@@ -76,11 +75,11 @@ const PartyList = () => {
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
-                title="নতুন পার্টি যোগ করুন"
+                title="নতুন সাপ্লায়ার যোগ করুন"
             >
                 <form className="space-y-4">
                     <div>
-                        <label className="block mb-2 font-medium text-gray-700">পার্টির নাম</label>
+                        <label className="block mb-2 font-medium text-gray-700">সাপ্লায়ারের নাম</label>
                         <input
                             type="text"
                             className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
@@ -90,10 +89,14 @@ const PartyList = () => {
                     <div>
                         <label className="block mb-2 font-medium text-gray-700">ধরন</label>
                         <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                            <option value="">নির্বাচন করুন</option>
                             <option value="milar">মিলার</option>
-                            <option value=" পাইকার">পাইকার</option>
-                            <option value="khuchra">খুচরা</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label className="block mb-2 font-medium text-gray-700">স্ট্যাটাস</label>
+                        <select className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="milar">ডেবিট</option>
+                            <option value="milar">ক্রেডিট</option>
                         </select>
                     </div>
                     <div>
@@ -133,4 +136,4 @@ const PartyList = () => {
     );
 };
 
-export default PartyList;
+export default SupplierList;

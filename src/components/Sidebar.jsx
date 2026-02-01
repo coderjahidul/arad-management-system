@@ -14,22 +14,40 @@ import {
     X,
     Wallet,
     Calendar,
-    BarChart3
+    BarChart3,
+    ChevronDown,
+    ChevronRight
 } from 'lucide-react';
+import { useState } from 'react';
 
 const Sidebar = ({ isOpen, onClose }) => {
     const location = useLocation();
+    const [expandedMenus, setExpandedMenus] = useState({});
+
+    const toggleSubmenu = (path) => {
+        setExpandedMenus(prev => ({
+            ...prev,
+            [path]: !prev[path]
+        }));
+    };
 
     const menuItems = [
         { path: '/', label: 'ড্যাশবোর্ড', icon: <LayoutDashboard size={20} /> },
         { path: '/stock', label: 'চাল ও স্টক', icon: <Package size={20} /> },
         { path: '/purchase', label: 'ক্রয় (Purchase)', icon: <ShoppingCart size={20} /> },
         { path: '/sales', label: 'বিক্রয় (Sales)', icon: <BadgeDollarSign size={20} /> },
-        { path: '/parties', label: 'পার্টি ম্যানেজমেন্ট', icon: <Users size={20} /> },
+        {
+            path: '/parties',
+            label: 'পার্টি ম্যানেজমেন্ট',
+            icon: <Users size={20} />,
+            subItems: [
+                { path: '/parties/suppliers', label: 'সাপ্লায়ার তালিকা' },
+                { path: '/parties/customers', label: 'কাস্টমার তালিকা' }
+            ]
+        },
         { path: '/ledger', label: 'লেজার ও হিসাব', icon: <BookOpen size={20} /> },
         { path: '/payments', label: 'পেমেন্ট / আদায়', icon: <CreditCard size={20} /> },
         { path: '/invoice', label: 'ইনভয়েস / রসিদ', icon: <FileText size={20} /> },
-        { path: '/market-rates', label: 'বাজার দর', icon: <TrendingUp size={20} /> },
         { path: '/expenses/daily', label: 'দৈনিক খরচ', icon: <Wallet size={20} /> },
         { path: '/expenses/monthly', label: 'মাসিক খরচ', icon: <Calendar size={20} /> },
         { path: '/expenses/report', label: 'খরচ রিপোর্ট', icon: <BarChart3 size={20} /> },
@@ -67,17 +85,53 @@ const Sidebar = ({ isOpen, onClose }) => {
                     <ul className="list-none">
                         {menuItems.map((item) => (
                             <li key={item.path} className="mb-2">
-                                <Link
-                                    to={item.path}
-                                    onClick={() => window.innerWidth < 768 && onClose()}
-                                    className={`flex items-center px-4 py-3 rounded-md gap-3 font-medium transition-colors ${location.pathname === item.path
-                                        ? 'bg-primary text-white'
-                                        : 'text-gray-600 hover:bg-gray-100'
-                                        }`}
-                                >
-                                    {item.icon}
-                                    {item.label}
-                                </Link>
+                                {item.subItems ? (
+                                    <div>
+                                        <div
+                                            onClick={() => toggleSubmenu(item.path)}
+                                            className={`flex items-center justify-between px-4 py-3 rounded-md cursor-pointer font-medium transition-colors ${location.pathname.startsWith(item.path)
+                                                ? 'bg-primary/10 text-primary'
+                                                : 'text-gray-600 hover:bg-gray-100'
+                                                }`}
+                                        >
+                                            <div className="flex items-center gap-3">
+                                                {item.icon}
+                                                {item.label}
+                                            </div>
+                                            {expandedMenus[item.path] ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+                                        </div>
+                                        {expandedMenus[item.path] && (
+                                            <ul className="ml-8 mt-1 border-l-2 border-primary/20 pl-2">
+                                                {item.subItems.map((subItem) => (
+                                                    <li key={subItem.path}>
+                                                        <Link
+                                                            to={subItem.path}
+                                                            onClick={() => window.innerWidth < 768 && onClose()}
+                                                            className={`block px-4 py-2 text-sm rounded-md transition-colors ${location.pathname === subItem.path
+                                                                ? 'text-primary font-medium'
+                                                                : 'text-gray-500 hover:text-gray-800'
+                                                                }`}
+                                                        >
+                                                            {subItem.label}
+                                                        </Link>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <Link
+                                        to={item.path}
+                                        onClick={() => window.innerWidth < 768 && onClose()}
+                                        className={`flex items-center px-4 py-3 rounded-md gap-3 font-medium transition-colors ${location.pathname === item.path
+                                            ? 'bg-primary text-white'
+                                            : 'text-gray-600 hover:bg-gray-100'
+                                            }`}
+                                    >
+                                        {item.icon}
+                                        {item.label}
+                                    </Link>
+                                )}
                             </li>
                         ))}
                     </ul>
