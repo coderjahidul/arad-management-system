@@ -1,24 +1,78 @@
 import { useState } from 'react';
-import { Phone, MapPin, Edit, Trash2, Plus, Save } from 'lucide-react';
+import { Phone, MapPin, Edit, Trash2, Plus, Save, Filter, Search } from 'lucide-react';
 import Modal from '../components/Modal';
 
 const CustomerList = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [filterType, setFilterType] = useState('all');
+    const [filterDue, setFilterDue] = useState('all');
+    const [searchQuery, setSearchQuery] = useState('');
+
     const customers = [
         { id: 2, name: 'ভাই ভাই স্টোর', type: 'খুচরা', phone: '01812345678', address: 'যাত্রাবাড়ী', due: 5000, receivable: 0 },
         { id: 3, name: 'মেসার্স লিটন এন্টারপ্রাইজ', type: 'পাইকার', phone: '01912345678', address: 'বাবুবাজার', due: 12000, receivable: 0 },
+        { id: 4, name: 'রহিম ট্রেডার্স', type: 'খুচরা', phone: '01612345678', address: 'মতিঝিল', due: 0, receivable: 0 },
     ];
+
+    const filteredCustomers = customers.filter(customer => {
+        const matchesType = filterType === 'all' || customer.type === filterType;
+        const matchesDue = filterDue === 'all' ||
+            (filterDue === 'has_due' && customer.due > 0) ||
+            (filterDue === 'no_due' && customer.due === 0);
+        const matchesSearch = customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            customer.phone.includes(searchQuery);
+
+        return matchesType && matchesDue && matchesSearch;
+    });
 
     return (
         <div>
-            <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6">
-                <h1 className="text-primary text-2xl font-bold">কাস্টমার তালিকা (Customer List)</h1>
-                <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors w-full sm:w-auto"
-                >
-                    <Plus size={18} /> নতুন কাস্টমার যোগ করুন
-                </button>
+            <div className="flex flex-col gap-4 mb-6">
+                <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h1 className="text-primary text-2xl font-bold">কাস্টমার তালিকা (Customer List)</h1>
+                    <button
+                        onClick={() => setIsModalOpen(true)}
+                        className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white px-4 py-2 rounded-md font-medium transition-colors w-full sm:w-auto"
+                    >
+                        <Plus size={18} /> নতুন কাস্টমার যোগ করুন
+                    </button>
+                </div>
+
+                <div className="bg-white p-4 rounded-lg shadow-sm flex flex-col sm:flex-row gap-4 items-center flex-wrap">
+                    <div className="relative w-full sm:w-64">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                        <input
+                            type="text"
+                            placeholder="নাম বা মোবাইল নম্বর দিয়ে খুঁজুন..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                        />
+                    </div>
+                    <div className="flex items-center gap-2 text-gray-600 font-medium">
+                        <Filter size={18} />
+                        ফিল্টার:
+                    </div>
+                    <select
+                        value={filterType}
+                        onChange={(e) => setFilterType(e.target.value)}
+                        className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full sm:w-auto min-w-[150px]"
+                    >
+                        <option value="all">সকল ধরন</option>
+                        <option value="পাইকার">পাইকার</option>
+                        <option value="খুচরা">খুচরা</option>
+                    </select>
+
+                    <select
+                        value={filterDue}
+                        onChange={(e) => setFilterDue(e.target.value)}
+                        className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent w-full sm:w-auto min-w-[150px]"
+                    >
+                        <option value="all">সকল বকেয়া</option>
+                        <option value="has_due">বকেয়া আছে</option>
+                        <option value="no_due">বকেয়া নেই</option>
+                    </select>
+                </div>
             </div>
 
             <div className="bg-white rounded-lg p-6 shadow-sm">
@@ -35,39 +89,47 @@ const CustomerList = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {customers.map((p) => (
-                                <tr key={p.id} className="hover:bg-gray-50 transition-colors">
-                                    <td className="p-3 border-b border-border font-semibold">{p.name}</td>
-                                    <td className="p-3 border-b border-border">
-                                        <span className="px-2 py-1 rounded text-xs bg-amber-100 text-amber-800">
-                                            {p.type}
-                                        </span>
-                                    </td>
-                                    <td className="p-3 border-b border-border">
-                                        <div className="flex items-center gap-1 text-sm">
-                                            <Phone size={14} /> {p.phone}
-                                        </div>
-                                    </td>
-                                    <td className="p-3 border-b border-border">
-                                        <div className="flex items-center gap-1 text-sm">
-                                            <MapPin size={14} /> {p.address}
-                                        </div>
-                                    </td>
-                                    <td className={`p-3 border-b border-border font-semibold ${p.due > 0 ? 'text-danger' : 'text-success'}`}>
-                                        {p.due > 0 ? `৳ ${p.due}` : '-'}
-                                    </td>
-                                    <td className="p-3 border-b border-border">
-                                        <div className="flex gap-2">
-                                            <button className="p-1 border border-border rounded hover:bg-bg transition-colors" title="এডিট">
-                                                <Edit size={16} />
-                                            </button>
-                                            <button className="p-1 border border-red-200 text-danger rounded hover:bg-red-50 transition-colors" title="মুছুন">
-                                                <Trash2 size={16} />
-                                            </button>
-                                        </div>
+                            {filteredCustomers.length > 0 ? (
+                                filteredCustomers.map((p) => (
+                                    <tr key={p.id} className="hover:bg-gray-50 transition-colors">
+                                        <td className="p-3 border-b border-border font-semibold">{p.name}</td>
+                                        <td className="p-3 border-b border-border">
+                                            <span className="px-2 py-1 rounded text-xs bg-amber-100 text-amber-800">
+                                                {p.type}
+                                            </span>
+                                        </td>
+                                        <td className="p-3 border-b border-border">
+                                            <div className="flex items-center gap-1 text-sm">
+                                                <Phone size={14} /> {p.phone}
+                                            </div>
+                                        </td>
+                                        <td className="p-3 border-b border-border">
+                                            <div className="flex items-center gap-1 text-sm">
+                                                <MapPin size={14} /> {p.address}
+                                            </div>
+                                        </td>
+                                        <td className={`p-3 border-b border-border font-semibold ${p.due > 0 ? 'text-danger' : 'text-success'}`}>
+                                            {p.due > 0 ? `৳ ${p.due}` : '-'}
+                                        </td>
+                                        <td className="p-3 border-b border-border">
+                                            <div className="flex gap-2">
+                                                <button className="p-1 border border-border rounded hover:bg-bg transition-colors" title="এডিট">
+                                                    <Edit size={16} />
+                                                </button>
+                                                <button className="p-1 border border-red-200 text-danger rounded hover:bg-red-50 transition-colors" title="মুছুন">
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="6" className="p-4 text-center text-gray-500">
+                                        কোন তথ্য পাওয়া যায়নি
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>
@@ -135,7 +197,7 @@ const CustomerList = () => {
                     </div>
                 </form>
             </Modal>
-        </div>
+        </div >
     );
 };
 
